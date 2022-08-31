@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block title %}{% endblock title %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg bg-dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color: white;" href="{% url 'home' %}">PLANTS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" style="color: white;" href="{% url 'home' %}">Home</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'comprar' %}">Comprar</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'listaPlantas' %}">Lista de plantas</a>
+          {{request.session.name }} 
+
+          <!--<a href="{% url 'cadastroPlantas' %}" class="nav-link active">Cadastrar</a>-->
+          {% if 'usuario' in request.session %}
+            <a class="nav-link active" style="color: gray; margin-left:58rem;margin-right:1rem;" href="{% url 'sair' %}">Sair</a>
+          {% else %}
+            <a class="nav-link active" style="color: gray; margin-left:48rem;margin-right:1rem;" href="{% url 'login' %}">Login</a>
+            <span class="nav-link active" style="color: white;">/</span>
+            <a class="nav-link active" style="color: gray; margin-left:1rem;" href="{% url 'cadastroUsers' %}">Cadastro</a>
+          {% endif %}
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+<!-- corpo do texto -->
+<div class="row" style="height: 100%; width: 100%; background-color:none;">
+    <div class="col-1 bg-dark d-flex flex-column gap-1 align-items-center" style="height: 91.5vh;width: auto;">
+        <a href="{% url 'carrinho' %}" class="mt-5 btn" style="color: white;">Carrinho</a>
+        <p style="color:green;" class="border rounded-5 ps-2 pe-2">
+        {% if 'carrinho' in request.session%}
+          {{num}}
+        {%else%}
+          0
+        {% endif %}
+        </p>
+    </div>
+    <div class="col-11  d-flex flex-column p-5" style="background-color: none;" >
+        <div class="row" style="background-color: none;">
+            <div class="col-6 d-flex align-items-center justify-content-center" style="height: 20rem;">
+              <img src="{{planta.imageurl}}" style="height: 100%;width:auto;" alt="">
+            </div>
+            <div class="col-6">
+                <h1>{{planta.nome}}</h1>
+                <p>Preço: R$ {{planta.preco}}</p>
+                <hr>
+                <form action="" method="POST">
+                    {% csrf_token %}    
+                    <label for="qtd">Quantidade:</label>
+                    <input type="number" min='1' value="1" name="qtd" class="w-25  form form-control">
+                    <br>
+                    <button type="submit" class="btn btn-warning" name="cart" value={{planta.pk}} formaction="{% url 'add_carrinho' %}">Carrinho</button>
+                    <a href="{% url 'pagamento' %}" class="btn btn-info">Comprar</a>
+                </form>
+            </div>
+        </div>
+        <hr>
+        <div>
+          <h5>Descrição:</h5>
+          <p>
+            {{planta.descricao}}
+          </p>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+

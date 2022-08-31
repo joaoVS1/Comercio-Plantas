@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+{% block title %}Carrinho{% endblock title %}
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color: white;" href="{% url 'home' %}">PLANTS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" style="color: white;" href="{% url 'home' %}">Home</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'comprar' %}">Comprar</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'listaPlantas' %}">Lista de plantas</a>
+          {{request.session.name }} 
+
+          <!--<a href="{% url 'cadastroPlantas' %}" class="nav-link active">Cadastrar</a>-->
+          {% if 'usuario' in request.session %}
+            <a class="nav-link active" style="color: gray; margin-left:58rem;margin-right:1rem;" href="{% url 'sair' %}">Sair</a>
+          {% else %}
+            <a class="nav-link active" style="color: gray; margin-left:48rem;margin-right:1rem;" href="{% url 'login' %}">Login</a>
+            <span class="nav-link active" style="color: white;">/</span>
+            <a class="nav-link active" style="color: gray; margin-left:1rem;" href="{% url 'cadastroUsers' %}">Cadastro</a>
+          {% endif %}
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+<!--Corpo-->
+<div class="container">
+    <div class="d-flex justify-content-center mt-3">
+        <h1>Carrinho</h1>
+    </div>
+    <div class="">
+        <table class="table">
+            <thead>
+                <th>Nome</th>
+                <th>Quantidade</th>
+                <th>Preço</th>
+                <th></th>
+            </thead>
+            <tbody>
+              {% for item in carrinho %}
+              <tr>
+                <td>{{item.0.nome}}</td>
+                <td>{{item.1}}</td>
+                <td>R$ {{item.0.preco|mul:item.1}}</td>
+                <td><a class="btn btn-warning" href="{% url 'remover' item.0.pk%}">Remover</a></td>
+              </tr>         
+              {% endfor %}
+                <tr>
+                    <th colspan="2">Total a pagar</th>
+                    <th>R$ {{total}}</th>
+                </tr>
+            </tbody>
+        </table>
+        <a class="btn btn-success" href="{% url 'pagamento' %}">Comprar</a>
+    </div>
+</div>
+{% endblock content %}

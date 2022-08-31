@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Lista Plantas{% endblock title %}
+
+{% block content %}
+<nav class="navbar navbar-expand-lg bg-dark mb-5" >
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color: white;" href="#">PLANTS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" style="color: white;" href="{% url 'home'%}">Home</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'comprar' %}">Comprar</a>
+          <a class="nav-link active" style="color: white;" href="#">Lista de plantas</a>
+          {{request.session.name }} 
+
+          <!--<a href="{% url 'cadastroPlantas' %}" class="nav-link active">Cadastrar</a>-->
+          {% if 'usuario' in request.session %}
+            <a class="nav-link active" style="color: gray; margin-left:58rem;margin-right:1rem;" href="{% url 'sair' %}">Sair</a>
+          {% else %}
+            <a class="nav-link active" style="color: gray; margin-left:48rem;margin-right:1rem;" href="{% url 'login' %}">Login</a>
+            <span class="nav-link active" style="color: white;">/</span>
+            <a class="nav-link active" style="color: gray; margin-left:1rem;" href="{% url 'cadastroUsers' %}">Cadastro</a>
+          {% endif %}
+        
+        </div>
+      </div>
+    </div>
+</nav>
+
+<div class="" style="background-color: none;">
+  <div class="row d-flex gap-3 justify-content-center">
+    {% for planta in plantas %}
+    <div class="col-3 border border-5 rounded">
+      <h5 class="mt-3"><u>Nome:</u> {{planta.nome}}</h5>
+      <hr>
+      <p>
+        <b>Nome científico:</b> {{planta.nome_cientifico}}
+        <br>
+        <b>Origem:</b> {{planta.origem}}
+      </p>
+      {% if 'usuario' in request.session %}
+      {% if adm.adm == True %}
+      <a class='btn btn-warning' href="{% url 'editarPlantas' planta.pk %}">Editar</a>
+      <a class='btn btn-danger' href="{% url 'deletar' planta.pk %}">Excluir</a>
+      {% endif %} 
+      {% endif %}
+    </div>
+      {% endfor %}
+  </div>
+</div>
+<div class="container d-flex align-items-center justify-content-center" style="margin-top:4rem;">
+  {% if 'usuario' in request.session %}
+      {% if adm.adm == True %}
+      <a href="{% url 'cadastroPlantas'%}" class="btn btn-info" style="width:10rem;">Adicionar</a>
+      {% endif %} 
+      {% endif %}
+</div>
+
+{% endblock content %}

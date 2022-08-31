@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+{% block title %}Comprar{% endblock title %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg bg-dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color: white;" href="{% url 'home' %}">PLANTS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" style="color: white;" href="{% url 'home' %}">Home</a>
+          <a class="nav-link active" style="color: white;" href="#">Comprar</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'listaPlantas' %}">Lista de plantas</a> 
+
+          <!--<a href="{% url 'cadastroPlantas' %}" class="nav-link active">Cadastrar</a>-->
+          {% if 'usuario' in request.session %}
+            <a class="nav-link active" style="color: gray; margin-left:57rem;margin-right:1rem;" href="{% url 'sair' %}">Sair</a>
+          {% else %}
+            <a class="nav-link active" style="color: gray; margin-left:48rem;margin-right:1rem;" href="{% url 'login' %}">Login</a>
+            <span class="nav-link active" style="color: white;">/</span>
+            <a class="nav-link active" style="color: gray; margin-left:1rem;" href="{% url 'cadastroUsers' %}">Cadastro</a>
+          {% endif %}
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+<!-- corpo do texto -->
+<div class="row" style="width:100%;height: 100%;">
+    <div class="col-1 bg-dark d-flex gap-1 flex-column align-items-center" style="height: 100%%;width: auto;">
+        <a href="{% url 'carrinho' %}" class="mt-5 btn" style="color: white;">Carrinho</a>
+        <p style="color:green;" class="border rounded-5 ps-2 pe-2">
+        {% if 'carrinho' in request.session%}
+          {{num}}
+        {% else %}
+          0
+        {% endif %}
+        </p>
+    </div>
+    <div class="col-11" style="height: 100%;padding-top: 0.75rem;">
+        {% for planta in plantas %}
+        <a class="link-dark row border" href="{% url 'paginaProduto' planta.pk %}" style="text-decoration: none; height:10rem;margin-bottom: 0.5rem;margin-left: 0.10rem;">
+            <div class="col-3" style="padding-top: 1rem;">
+              <img src="{{planta.imageurl}}" style="height: 8rem;width:auto;" alt="">
+            </div>
+            <div class="col-5 d-flex flex-column align-items-start" style="text-decoration: none;">
+              <h5 class="">{{planta.nome}}</h5>
+              <p>R$ {{planta.preco}}</p>
+          </div>
+          <div class="col-4" style="text-decoration: none;">
+            <p><b>Origem:</b> {{planta.origem}}</p>
+            <p><b>Nome Científico:</b> {{planta.nome_cientifico}}</p>
+          </div>
+        </a>
+        {% endfor %}
+    </div>
+</div>
+
+{% endblock content %}

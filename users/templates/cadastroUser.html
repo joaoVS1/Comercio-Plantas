@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+
+{% block title %}Cadastro{% endblock title %}
+
+{% block content %}
+
+{% if 'usuario' in request.session %}
+<div class="container border rounded" style="margin-top: 2rem;width:100%;flex-direction:column;display:flex;align-items:center;justify-content:center;">
+    <h4>Você já está logado!</h4>
+    <p>Você já está logado com o email {{email}}</p>
+    <p>Para efetuar um novo cadastro, clique em sair</p>
+    <div class="d-flex gap-5">
+        <a class="btn btn-warning" href="{% url 'sair' %}">Sair</a>
+        <a class="btn btn-primary" href="{% url 'home' %}">Voltar</a>
+    </div>
+</div>
+
+{% else %}
+
+<div class="container">
+    <form action="" method="POST">
+        {% csrf_token %}
+        <h1>Cadastro</h1>
+        <hr>
+        {% for message in messages %}
+        {{message}}  
+        <hr>
+        {% endfor %}
+        <label for="nome" class="form-label">Nome: </label>
+        <input type="text" maxlength="50" name="nome" class="form-control" id="" required>
+        <label for="email" class="form-label">Email: </label>
+        <input type="email" name="email" class="form-control" required>
+        <label for="senha">Senha: </label>
+        <input type="password" name="senha" class="form-control" required minlength="3">
+        <hr>
+        <input type="submit" value="Enviar" class="btn btn-success">
+        <input type="reset" value="Reset" class="btn btn-danger">
+        <a class="btn btn-primary" style="margin-left: 56.5rem;" href="{% url 'login'%}">Login</a>
+    </form>
+</div>
+
+{% endif %}
+
+
+
+    
+
+{% endblock content %}
+
+
+

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}Home{% endblock title %}
+
+{% block content %}
+
+<nav class="navbar navbar-expand-lg bg-dark" >
+    <div class="container-fluid">
+      <a class="navbar-brand" style="color: white;" href="#">PLANTS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" style="color: white;" href="#">Home</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'comprar' %}">Comprar</a>
+          <a class="nav-link active" style="color: white;" href="{% url 'listaPlantas' %}">Lista de plantas</a>
+          {{request.session.name }} 
+
+          <!--<a href="{% url 'cadastroPlantas' %}" class="nav-link active">Cadastrar</a>-->
+          {% if 'usuario' in request.session %}
+            <a class="nav-link active" style="color: gray; margin-left:58rem;margin-right:1rem;" href="{% url 'sair' %}">Sair</a>
+          {% else %}
+            <a class="nav-link active" style="color: gray; margin-left:48rem;margin-right:1rem;" href="{% url 'login' %}">Login</a>
+            <span class="nav-link active" style="color: white;">/</span>
+            <a class="nav-link active" style="color: gray; margin-left:1rem;" href="{% url 'cadastroUsers' %}">Cadastro</a>
+          {% endif %}
+        
+        </div>
+      </div>
+    </div>
+  </nav>
+<!-- Corpo do texto -->
+<div class="container d-flex justify-content mt-5 border border-5 rounded">
+  <div>
+    <h2>Bem Vindo!</h2>
+    <p>
+      Bem vindo ao Plants, um site feito única e exclusivamente para puxar o saco da professora Andréia! Aqui você pode explorar
+    e comprar plantas variadas cadastradas em nosso sistema. Abaixo você pode verificar uma lista com algumas de nossas plantas.
+    Para comprá-las você deve acessar a guia 'Comprar'. Antes de comprar, lembre-se, você deve estar logado no sistema. Caso não
+    possua uma conta, basta cadastrar-se.
+    </p>
+  </div>
+</div>
+
+<div class="mt-5" style="width: 100%; height: 3rem; background-image: url('https://www.pinterest.com/pin/665195807458277986/');background-color: darkgreen;"></div>
+
+{% endblock content %}

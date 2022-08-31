@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <h1>Cadastrar Planta</h1>
+        <form class="" action="" method="POST">
+            {% for message in messages %}
+              {{message}}
+            {% endfor %}
+            {% csrf_token %}
+            <label for="nome">Nome Popular: </label>
+            <input type="text" class="form-control" name="nome" required>
+            <label for="nomecien">Nome Científico: </label>
+            <input type="text" class="form-control" name="nomecien" required>
+            <label for="origem">Origem: </label>
+            <input type="text" class="form-control" name="origem" required> 
+            <label for="preco">Preço: </label>
+            <input type="text" class="form-control" name="preco" required>
+            <label for="imageurl">Url da Imagem: </label>
+            <input type="text" class="form-control" name="imageurl" required>
+            <label for="descricao">Descrição: </label>
+            <input type="text" class="form-control" name="descricao">
+            <hr>
+            <input type="submit" class="btn btn-success">
+            <input type="reset" class="btn btn-warning">
+        </form>
+    </div> 
+
+{% endblock content %}
+
+    
